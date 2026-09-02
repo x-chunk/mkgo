@@ -1,0 +1,47 @@
+# {{.Name}}
+
+{{.Description}}
+
+## Install
+
+```sh
+go install {{.Module}}{{if .IsCommand}}@latest{{else}}/...@latest{{end}}
+```
+
+## Usage
+{{if eq .Template "api"}}
+```sh
+go run .           # serves on :8080, override with ADDR
+curl localhost:8080/healthz
+```
+{{else if eq .Template "lib"}}
+```go
+import "{{.Module}}"
+
+func main() {
+	fmt.Println({{.Package}}.Greet("gopher"))
+}
+```
+{{else}}
+```sh
+go run . --name gopher
+```
+{{end}}
+## Development
+
+```sh
+make check   # format, vet and test
+make build   # build into bin/{{.Binary}}
+make test    # run the test suite
+```
+
+## Layout
+
+```
+{{.Layout}}
+```
+{{if .HasLicense}}
+## License
+
+{{.License}}. See [LICENSE](LICENSE).
+{{end}}

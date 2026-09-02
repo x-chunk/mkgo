@@ -1,0 +1,28 @@
+// Package app holds the behavior of {{.Binary}} so it can be tested without
+// starting a process.
+package app
+
+import (
+	"flag"
+	"fmt"
+	"io"
+)
+
+// Run parses arguments and writes the result to out.
+func Run(args []string, out io.Writer, version string) error {
+	fs := flag.NewFlagSet("{{.Binary}}", flag.ContinueOnError)
+	fs.SetOutput(out)
+	showVersion := fs.Bool("version", false, "print the version and exit")
+	name := fs.String("name", "world", "who to greet")
+
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *showVersion {
+		fmt.Fprintf(out, "{{.Binary}} %s\n", version)
+		return nil
+	}
+
+	fmt.Fprintf(out, "hello, %s\n", *name)
+	return nil
+}
