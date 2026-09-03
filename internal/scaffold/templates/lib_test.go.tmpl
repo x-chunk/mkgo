@@ -1,0 +1,22 @@
+package {{.Package}}
+
+import "testing"
+
+func TestGreet(t *testing.T) {
+	tests := map[string]struct {
+		input string
+		want  string
+	}{
+		"named":  {input: "gopher", want: "hello, gopher"},
+		"empty":  {input: "", want: "hello, world"},
+		"spaces": {input: "go dev", want: "hello, go dev"},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			if got := Greet(tc.input); got != tc.want {
+				t.Errorf("Greet(%q) = %q, want %q", tc.input, got, tc.want)
+			}
+		})
+	}
+}

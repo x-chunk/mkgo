@@ -1,0 +1,27 @@
+package app
+
+import (
+	"bytes"
+	"strings"
+	"testing"
+)
+
+func TestRunGreets(t *testing.T) {
+	var out bytes.Buffer
+	if err := Run([]string{"--name", "gopher"}, &out, "test"); err != nil {
+		t.Fatalf("Run returned an error: %v", err)
+	}
+	if got := out.String(); !strings.Contains(got, "hello, gopher") {
+		t.Errorf("unexpected output: %q", got)
+	}
+}
+
+func TestRunPrintsVersion(t *testing.T) {
+	var out bytes.Buffer
+	if err := Run([]string{"--version"}, &out, "1.2.3"); err != nil {
+		t.Fatalf("Run returned an error: %v", err)
+	}
+	if got := out.String(); !strings.Contains(got, "1.2.3") {
+		t.Errorf("version missing from output: %q", got)
+	}
+}

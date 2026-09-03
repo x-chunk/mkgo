@@ -1,0 +1,13 @@
+// Package {{.Package}} is the public API of {{.Name}}.
+package {{.Package}}
+
+import "fmt"
+
+// Greet returns a greeting for name. It is a placeholder: replace it with the
+// first real function of the package.
+func Greet(name string) string {
+	if name == "" {
+		name = "world"
+	}
+	return fmt.Sprintf("hello, %s", name)
+}
